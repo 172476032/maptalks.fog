@@ -1,1 +1,0 @@
-"use strict";var sum=function(t,r){alert(t+r)};

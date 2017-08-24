@@ -17,6 +17,17 @@ gulp.task('covertJS',function () {
         .pipe(uglify())
         .pipe(gulp.dest('dist/js'))
 });
+//合并js
+gulp.task('concatJS',function () {
+    return gulp.src('app/js/*.js')
+        //.pipe(concat('index.js'))//合并后的文件名
+        .pipe(gulp.dest('app/js'))
+        .pipe(babel({
+            presets:['es2015']
+        }))
+        .pipe(uglify())
+        .pipe(gulp.dest('dist/js'))
+});
 // 合并并压缩css
 gulp.task('convertCSS', function(){
     return gulp.src('app/css/*.css')
@@ -30,12 +41,13 @@ gulp.task('convertCSS', function(){
 // browserify
 gulp.task("browserify", function () {
     var b = browserify({
-        entries: "dist/js/index.js"
+        entries: "dist/js/app.js"
     });
     return b.bundle()
         .pipe(source("bundle.js"))
         .pipe(gulp.dest("dist/js"));
 });
+
 gulp.task('watch',function () {
     gulp.watch('app/css/*.css',['covertCSS']);
     gulp.watch('app/js/*.js'['covertJS','browserify'])
